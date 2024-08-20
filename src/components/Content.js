@@ -4,6 +4,8 @@ import FoodList from "./FoodList";
 import getLists from "../api";
 import FoodForm from "./FoodForm";
 
+import searchImg from "../assets/search.svg";
+
 const LIMIT = 10;
 
 function Content() {
@@ -70,41 +72,52 @@ function Content() {
 
   return (
     <>
-      <FoodForm />
-      <div className="p-3">
-        <div>
-          <button id="byCalorie" onClick={handleChangeOrder}>
-            By calorie
-          </button>
-        </div>
-        <div>
-          <button id="byDate" onClick={handleChangeOrder}>
-            By date
-          </button>
-        </div>
-        <div>
-          <form onSubmit={handleSearchSubmit}>
-            <input type="text" name="search" className="border" />
-            <button type="submit"> Search </button>
-          </form>
-        </div>
-      </div>
+      <div className="flex flex-col items-center px-[250px] pt-10 pb-4">
+        <FoodForm />
 
-      <div className="p-10">
-        <FoodList items={items} />
+        <div className="flex w-full justify-between">
+          <form className="relative" onSubmit={handleSearchSubmit}>
+            <input
+              className="p-1 border-2 border-green rounded-md h-8"
+              type="text"
+              name="search"
+            />
+            <button type="submit">
+              <img
+                className="w-5 absolute top-2 right-2"
+                src={searchImg}
+                alt="search"
+              />
+            </button>
+          </form>
+          <div className="flex gap-5">
+            <button className="" id="byCalorie" onClick={handleChangeOrder}>
+              By calorie
+            </button>
+
+            <button className="" id="byDate" onClick={handleChangeOrder}>
+              By date
+            </button>
+          </div>
+        </div>
       </div>
-      {loadingError?.message && <div> {loadingError.message}</div>}
-      <div className="p-3">
-        {cursor && (
-          <button
-            className={`bg-green rounded text-white font-semibold px-3 py-1 ${
-              isLoading && "bg-gray-300 hidden"
-            }`}
-            onClick={handleLoadMore}
-          >
-            Load more
-          </button>
-        )}
+      <div className="flex flex-col justify-center items-center px-[250px]">
+        <div className="">
+          <FoodList items={items} />
+        </div>
+        {loadingError?.message && <div> {loadingError.message}</div>}
+        <div className="px-20 py-10">
+          {cursor && (
+            <button
+              className={`bg-green rounded text-white font-semibold px-3 py-1 ${
+                isLoading && "bg-gray-300 hidden"
+              }`}
+              onClick={handleLoadMore}
+            >
+              Load more
+            </button>
+          )}
+        </div>
       </div>
     </>
   );

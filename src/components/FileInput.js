@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+
+import cancel from "../assets/cancel.svg";
 import previewUpload from "../assets/image-upload.svg";
 
 function FileInput({ name, value, onChange }) {
@@ -39,26 +41,31 @@ function FileInput({ name, value, onChange }) {
   // uncontrolled component for file input (security reasons)
   return (
     <div>
-      <img
-        className="hover:cursor-pointer"
-        src={preview || previewUpload}
-        alt="preview upload"
-        onClick={handleUploadClick}
-      />
-      <input
-        className="hidden"
-        id={name}
-        name={name}
-        type="file"
-        accept="image/*"
-        onChange={handleChange}
-        ref={inputRef}
-      />
-      {value && (
-        <button type="button" onClick={handleClearClick}>
-          X
-        </button>
-      )}
+      <div className="absolute top-0 right-0 w-10 z-10">
+        {value && (
+          <button type="button" onClick={handleClearClick}>
+            <img src={cancel} alt="X" />
+          </button>
+        )}
+      </div>
+
+      <div className="absolute inset-3 w-20">
+        <img
+          className="w-[70px] h-[60px] hover:cursor-pointer"
+          src={preview || previewUpload}
+          alt="preview upload"
+          onClick={handleUploadClick}
+        />
+        <input
+          className="hidden w-[70px] h-[60px]"
+          id={name}
+          name={name}
+          type="file"
+          accept="image/*"
+          onChange={handleChange}
+          ref={inputRef}
+        />
+      </div>
     </div>
   );
 }

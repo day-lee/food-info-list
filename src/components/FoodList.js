@@ -6,14 +6,27 @@ function FoodListItem({ item }) {
   };
   return (
     <>
-      <div className="p-3" key={item.id}>
-        <div>
-          <img className="h-20" src={item.imgUrl} alt={item.title} />
+      <div
+        className="flex h-[138px] w-[400px] gap-5 border-2 border-grey rounded-xl p-4 my-2 w-[506px]"
+        key={item.id}
+      >
+        <div className>
+          <img
+            className="rounded w-[150px] h-[100px]"
+            src={item.imgUrl}
+            alt={item.title}
+          />
         </div>
-        <div>Name: {item.title}</div>
-        <div>Calorie: {item.calorie}</div>
-        <div>Unit: {item.content}</div>
-        <div>Created date: {dateFormat(item.createdAt)}</div>
+        <div className="flex flex-col gap-2 flex-1">
+          <div className="">
+            <span className="font-semibold text-lg">{item.title}</span>
+            <span className="bg-grey p-1 m-2 rounded text-darkgreen font-extrabold text-sm">
+              {item.calorie} kcal
+            </span>
+          </div>
+          <div className="text-gray-500">{item.content}</div>
+          <div className="text-gray-400 "> {dateFormat(item.createdAt)}</div>
+        </div>
       </div>
     </>
   );
@@ -21,7 +34,7 @@ function FoodListItem({ item }) {
 
 function FoodList({ items }) {
   return (
-    <ul>
+    <ul className="flex flex-wrap justify-start gap-3">
       {items.map((item) => (
         <li key={item.id}>
           <FoodListItem item={item} />
