@@ -3,13 +3,32 @@ import { useState, useEffect } from "react";
 import FoodList from "./FoodList";
 import getLists from "../api";
 
+const LIMIT = 10;
+
 function Content() {
+  const [cursor, setCursor] = useState("");
   const [items, setItems] = useState([]);
   const [order, setOrder] = useState("calorie");
 
-  const handleLoad = async (query) => {
-    const { foods } = await getLists(query);
-    setItems(foods);
+  const handleLoad = async (queries) => {
+    console.log(queries);
+    const {
+      foods,
+      paging: { nextCursor },
+    } = await getLists(queries);
+    if (!queries.cursor) {
+      setItems(foods);
+    } else {
+      // foods is an array, which is reference types
+      // Use spread syntax to avoid modifying existing array issue
+      setItems((prevItem) => [...prevItem, ...foods]);
+    }
+    setCursor(nextCursor);
+  };
+
+  const handleLoadMore = () => {
+    console.log(order, cursor);
+    handleLoad({ order, cursor });
   };
 
   const handleChangeOrder = (e) => {
@@ -22,7 +41,8 @@ function Content() {
   };
 
   useEffect(() => {
-    handleLoad(order);
+    //console.log(order, cursor);
+    handleLoad({ order, cursor, LIMIT });
   }, [order]);
 
   return (
@@ -42,6 +62,9 @@ function Content() {
 
       <div className="p-10">
         <FoodList items={items} />
+      </div>
+      <div className="p-3">
+        <button onClick={handleLoadMore}> Load more</button>
       </div>
     </>
   );

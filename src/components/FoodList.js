@@ -3,12 +3,10 @@ function FoodListItem({ item }) {
     const timeStamp = new Date(item.updatedAt);
     const formatDate = timeStamp.toISOString().substring(0, 10);
     return formatDate;
-
-    //return date;
   };
   return (
     <>
-      <div className="p-3">
+      <div className="p-3" key={item.id}>
         <div>
           <img className="h-20" src={item.imgUrl} alt={item.title} />
         </div>
