@@ -1,13 +1,11 @@
-async function getLists({ order = "calorie", cursor = "", LIMIT = 10 }) {
-  try {
-    const response = await fetch(
-      `https://learn.codeit.kr/1012/foods?order=${order}&cursor=${cursor}&limit=${LIMIT}`
-    );
-    const body = await response.json();
-    return body;
-  } catch (error) {
-    console.error("ERRRORORORORROR");
+async function getLists({ order = "", cursor = "", LIMIT = 10, search = "" }) {
+  const query = `order=${order}&cursor=${cursor}&limit=${LIMIT}&search=${search}`;
+  const response = await fetch(`https://learn.codeit.kr/1031/foods?${query}`);
+  if (!response.ok) {
+    throw new Error("Failed to load data.");
   }
+  const body = await response.json();
+  return body;
 }
 
 export default getLists;
