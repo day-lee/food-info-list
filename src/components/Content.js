@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import FoodList from "./FoodList";
 import getLists from "../api";
+import FoodForm from "./FoodForm";
 
 const LIMIT = 10;
 
@@ -69,6 +70,7 @@ function Content() {
 
   return (
     <>
+      <FoodForm />
       <div className="p-3">
         <div>
           <button id="byCalorie" onClick={handleChangeOrder}>
