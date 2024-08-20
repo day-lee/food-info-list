@@ -4,8 +4,8 @@ import github from "../assets/github.svg";
 
 function Footer() {
   return (
-    <div className="flex-col bg-grey h-[180px]">
-      <div className="flex gap-1 justify-center p-8">
+    <div className="flex-col bg-grey h-[140px] p-10">
+      <div className="flex gap-1 justify-center">
         <a
           href="https://www.linkedin.com/in/dev-dayeonlee/"
           target="_blank"
