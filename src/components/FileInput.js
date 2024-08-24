@@ -40,8 +40,8 @@ function FileInput({ name, value, onChange }) {
 
   // uncontrolled component for file input (security reasons)
   return (
-    <div>
-      <div className="absolute top-0 right-0 w-10 z-10">
+    <>
+      <div className="absolute top-0 right-0 w-10  z-10">
         {value && (
           <button type="button" onClick={handleClearClick}>
             <img src={cancel} alt="X" />
@@ -49,7 +49,7 @@ function FileInput({ name, value, onChange }) {
         )}
       </div>
 
-      <div className="absolute inset-3 w-20">
+      <div className="absolute w-20 inset-3">
         <img
           className="w-[70px] h-[60px] hover:cursor-pointer"
           src={preview || previewUpload}
@@ -66,7 +66,7 @@ function FileInput({ name, value, onChange }) {
           ref={inputRef}
         />
       </div>
-    </div>
+    </>
   );
 }
 export default FileInput;

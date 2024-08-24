@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import FoodList from "./FoodList";
-import getLists from "../api";
+import { getLists } from "../api";
 import FoodForm from "./FoodForm";
 
 import searchImg from "../assets/search.svg";
@@ -15,6 +15,8 @@ function Content() {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingError, setLoadingError] = useState("");
   const [search, setSearch] = useState("");
+  const [isCalorieSelected, setIsCalorieSelected] = useState(true);
+  const [isDateSelected, setIsDateSelected] = useState(false);
 
   const handleLoad = async (queries) => {
     //TODO: try catch isloading button color change
@@ -60,8 +62,12 @@ function Content() {
     const { id } = e.target;
     if (id === "byCalorie") {
       setOrder("calorie");
+      setIsCalorieSelected(true);
+      setIsDateSelected(false);
     } else if (id === "byDate") {
       setOrder("createdAt");
+      setIsCalorieSelected(false);
+      setIsDateSelected(true);
     }
   };
 
@@ -72,51 +78,62 @@ function Content() {
 
   return (
     <>
-      <div className="flex flex-col items-center px-[250px] pt-10 pb-4">
-        <FoodForm />
-
-        <div className="flex w-full justify-between">
-          <form className="relative" onSubmit={handleSearchSubmit}>
-            <input
-              className="p-1 border-2 border-green rounded-md h-8"
-              type="text"
-              name="search"
-            />
-            <button type="submit">
-              <img
-                className="w-5 absolute top-2 right-2"
-                src={searchImg}
-                alt="search"
+      <div className="flex flex-col justify-center items-center sm:px-20 mb-4">
+        <div className="flex flex-col items-center pt-10 pb-4 w-5/6">
+          <FoodForm />
+          <div className="flex w-full justify-start gap-5">
+            <form className="relative" onSubmit={handleSearchSubmit}>
+              <input
+                className="p-1 border-2 border-green rounded-md h-8"
+                type="text"
+                name="search"
               />
-            </button>
-          </form>
-          <div className="flex gap-5">
-            <button className="" id="byCalorie" onClick={handleChangeOrder}>
-              By calorie
-            </button>
+              <button type="submit">
+                <img
+                  className="w-5 absolute top-2 right-2"
+                  src={searchImg}
+                  alt="search"
+                />
+              </button>
+            </form>
+            <div className="flex gap-5">
+              <button
+                className={` ${
+                  isCalorieSelected && "text-darkgreen font-semibold"
+                }`}
+                id="byCalorie"
+                onClick={handleChangeOrder}
+              >
+                By calorie
+              </button>
 
-            <button className="" id="byDate" onClick={handleChangeOrder}>
-              By date
-            </button>
+              <button
+                className={`${
+                  isDateSelected && "font-semibold text-darkgreen"
+                }`}
+                id="byDate"
+                onClick={handleChangeOrder}
+              >
+                By date
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col justify-center items-center px-[250px]">
-        <div className="">
+        <div className="flex flex-col justify-center sm:justify-start w-5/6">
           <FoodList items={items} />
-        </div>
-        {loadingError?.message && <div> {loadingError.message}</div>}
-        <div className="px-20 py-10">
-          {cursor && (
-            <button
-              className={`bg-green rounded text-white font-semibold px-3 py-1 ${
-                isLoading && "bg-gray-300 hidden"
-              }`}
-              onClick={handleLoadMore}
-            >
-              Load more
-            </button>
-          )}
+          <div className="flex justify-center">
+            {loadingError?.message && <div> {loadingError.message}</div>}
+            {cursor && (
+              <button
+                className={`my-10 w-[150px] bg-green rounded text-white font-semibold py-1 hover:bg-darkgreen ${
+                  isLoading && "bg-gray-300 hidden"
+                }`}
+                onClick={handleLoadMore}
+              >
+                Load more
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </>
