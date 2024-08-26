@@ -79,7 +79,7 @@ function Content() {
   return (
     <>
       <div className="flex flex-col justify-center items-center sm:px-20 mb-4">
-        <div className="flex flex-col items-center pt-10 pb-4 w-5/6">
+        <div className="flex flex-col items-center pt-8 pb-4 w-5/6">
           <FoodForm />
           <div className="flex w-full justify-start gap-5">
             <form className="relative" onSubmit={handleSearchSubmit}>

@@ -49,7 +49,7 @@ function FileInput({ name, value, onChange }) {
         )}
       </div>
 
-      <div className="absolute w-20 inset-3">
+      <div className="absolute w-18 inset-3">
         <img
           className="w-[70px] h-[60px] hover:cursor-pointer"
           src={preview || previewUpload}

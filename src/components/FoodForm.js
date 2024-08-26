@@ -30,17 +30,17 @@ function FoodForm() {
   };
 
   return (
-    <div className="h-[138px] w-full rounded-xl p-2 mb-14 border-2">
+    <div className="h-[138px] w-full rounded-xl p-2 mb-10 border-2">
       <form
-        className="flex w-full items-center gap-4 justify-between p-3"
+        className="flex w-full items-center gap-3 justify-between p-3"
         onSubmit={handleSubmit}
       >
-        <div className="flex w-1/6 justify-center">
-          <div className=" h-[87px] w-20 sm:w-[100px] relative border-2 rounded-md">
+        <div className="flex w-1/3 lg:w-1/12 justify-center">
+          <div className=" h-[87px] w-[90px] sm:w-[100px] relative border-2 rounded-md">
             <FileInput name="imgUrl" value={imgUrl} onChange={handleChange} />
           </div>
         </div>
-        <div className="flex w-5/6 flex-col">
+        <div className="flex w-2/3 lg:w-11/12 flex-col">
           <div className="flex w-full justify-between pt-1 pb-4 gap-0 sm:gap-3">
             <div className="w-5/12">
               <label htmlFor="title"></label>
@@ -54,7 +54,7 @@ function FoodForm() {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="w-3/12  sm:w-5/12 ">
+            <div className="w-2/12  sm:w-5/12 ">
               <label htmlFor="calorie"></label>
               <input
                 className="p-1 border-2 rounded-md w-full"
@@ -65,7 +65,7 @@ function FoodForm() {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="w-2/12 flex flex-shrink-0 justify-end">
+            <div className="w-3/12 flex flex-shrink-0 justify-end">
               <button
                 className=" w-full bg-green rounded-md text-white font-semibold border px-2 py-1 hover:bg-darkgreen"
                 type="submit"
