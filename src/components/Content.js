@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import FoodList from "./FoodList";
-import { getLists } from "../api";
+import { getLists, deleteList } from "../api";
 import FoodForm from "./FoodForm";
 
 import searchImg from "../assets/search.svg";
@@ -11,12 +11,12 @@ const LIMIT = 10;
 function Content() {
   const [cursor, setCursor] = useState("");
   const [items, setItems] = useState([]);
-  const [order, setOrder] = useState("calorie");
+  const [order, setOrder] = useState("createdAt");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingError, setLoadingError] = useState("");
   const [search, setSearch] = useState("");
-  const [isCalorieSelected, setIsCalorieSelected] = useState(true);
-  const [isDateSelected, setIsDateSelected] = useState(false);
+  const [isCalorieSelected, setIsCalorieSelected] = useState(false);
+  const [isDateSelected, setIsDateSelected] = useState(true);
 
   const handleLoad = async (queries) => {
     //TODO: try catch isloading button color change
@@ -71,6 +71,17 @@ function Content() {
     }
   };
 
+  const handleSubmitSuccess = (item) => {
+    setItems((prevItems) => [item, ...prevItems]);
+  };
+
+  const handleDelete = async (postId) => {
+    const result = await deleteList(postId);
+    if (!result) return;
+    // notice filter from prevItem
+    setItems((prevItems) => prevItems.filter((item) => item.id !== postId));
+  };
+
   useEffect(() => {
     //console.log(order, cursor);
     handleLoad({ order, search });
@@ -80,7 +91,7 @@ function Content() {
     <>
       <div className="flex flex-col justify-center items-center sm:px-20 mb-4">
         <div className="flex flex-col items-center pt-8 pb-4 w-5/6">
-          <FoodForm />
+          <FoodForm onSubmitSuccess={handleSubmitSuccess} />
           <div className="flex w-full justify-start gap-5">
             <form className="relative" onSubmit={handleSearchSubmit}>
               <input
@@ -120,7 +131,7 @@ function Content() {
           </div>
         </div>
         <div className="flex flex-col justify-center sm:justify-start w-5/6">
-          <FoodList items={items} />
+          <FoodList items={items} onDelete={handleDelete} />
           <div className="flex justify-center">
             {loadingError?.message && <div> {loadingError.message}</div>}
             {cursor && (

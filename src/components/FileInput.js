@@ -57,7 +57,8 @@ function FileInput({ name, value, onChange }) {
           onClick={handleUploadClick}
         />
         <input
-          className="hidden w-[70px] h-[60px]"
+          hidden
+          className=" w-[70px] h-[60px]"
           id={name}
           name={name}
           type="file"

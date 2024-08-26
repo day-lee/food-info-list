@@ -1,20 +1,20 @@
 import { useState } from "react";
 import FileInput from "./FileInput";
+import { createList } from "../api";
 
 const DEFAULT_VALUES = {
   title: "",
   content: "",
   calorie: 0,
-  imgUrl: "",
+  imgUrl: null,
 };
 
-function FoodForm() {
+function FoodForm({ onSubmitSuccess }) {
   const [values, setValues] = useState(DEFAULT_VALUES);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { title, content, calorie, imgUrl } = values;
 
   const handleChange = (name, value) => {
-    console.log(name, value);
     setValues((prevItem) => ({ ...prevItem, [name]: value }));
   };
 
@@ -23,10 +23,24 @@ function FoodForm() {
     handleChange(name, value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
-    console.log("submit");
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("calorie", calorie);
+    formData.append("imgFile", imgUrl);
+    try {
+      setIsSubmitting(true);
+      const { food } = await createList(formData);
+      setValues(DEFAULT_VALUES);
+      onSubmitSuccess(food);
+    } catch (error) {
+      return;
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -67,8 +81,13 @@ function FoodForm() {
             </div>
             <div className="w-3/12 flex flex-shrink-0 justify-end">
               <button
-                className=" w-full bg-green rounded-md text-white font-semibold border px-2 py-1 hover:bg-darkgreen"
+                className={`w-full rounded-md text-white  font-semibold border px-2 py-1 hover:bg-darkgreen ${
+                  isSubmitting
+                    ? "bg-gray-500 hover:bg-gray-500"
+                    : "bg-green hover:bg-darkgreenhover:bg-darkgreen"
+                }`}
                 type="submit"
+                disabled={isSubmitting}
               >
                 Post
               </button>

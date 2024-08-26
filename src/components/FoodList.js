@@ -1,6 +1,7 @@
 import englishTitle from "../enTitle";
+import noImg from "../assets/no-image.svg";
 
-function FoodListItem({ item, enTitle }) {
+function FoodListItem({ item, enTitle, onDelete }) {
   const dateFormat = () => {
     const timeStamp = new Date(item.updatedAt);
     // const formatDate = timeStamp.toISOString().substring(0, 10);
@@ -11,7 +12,7 @@ function FoodListItem({ item, enTitle }) {
   return (
     <>
       <div
-        className="flex items-center h-[160px] sm:h-[150px] gap-5 border-2 border-grey rounded-xl p-4 my-2"
+        className="flex relative items-center h-[160px] sm:h-[150px] gap-5 border-2 border-grey rounded-xl p-4 my-2"
         key={item.id}
       >
         <div className="relative shrink-0">
@@ -22,7 +23,7 @@ function FoodListItem({ item, enTitle }) {
           </div>
           <img
             className="rounded w-[130px] h-[100px] sm:w-[150px]"
-            src={item.imgUrl}
+            src={item.imgUrl || noImg}
             alt={item.title}
           />
         </div>
@@ -35,18 +36,29 @@ function FoodListItem({ item, enTitle }) {
           <div className="text-gray-500">{item.content}</div>
           <div className="text-gray-400 "> {dateFormat(item.createdAt)}</div>
         </div>
+        <div className="flex gap-2 absolute bottom-5 right-4">
+          <button className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-green hover:bg-darkgreen">
+            Edit
+          </button>
+          <button
+            className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-gray-400 hover:bg-gray-500"
+            onClick={() => onDelete(item.id)}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </>
   );
 }
 
-function FoodList({ items }) {
+function FoodList({ items, onDelete }) {
   const itemsList = items.map((item) => {
     const enTitleFind = englishTitle.find((enItem) => item.id === enItem.id);
     const enTitle = enTitleFind?.title;
     return (
       <li key={item.id}>
-        <FoodListItem item={item} enTitle={enTitle} />
+        <FoodListItem item={item} enTitle={enTitle} onDelete={onDelete} />
       </li>
     );
   });
