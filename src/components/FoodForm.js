@@ -8,9 +8,18 @@ const DEFAULT_VALUES = {
   calorie: 0,
   imgUrl: null,
 };
-
-function FoodForm({ onSubmitSuccess }) {
-  const [values, setValues] = useState(DEFAULT_VALUES);
+/** FoodForm is shown 1. initial post 2. updating exsting post 
+Filling in the form happens depending on two situations
+if initialValues are filled and delivered, that already means 
+post is on editing mode.
+if initialValues has no value, that means it is fresh post hence use Default values
+*/
+function FoodForm({
+  onSubmitSuccess,
+  initialValues = DEFAULT_VALUES,
+  onCancel,
+}) {
+  const [values, setValues] = useState(initialValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { title, content, calorie, imgUrl } = values;
 
@@ -44,7 +53,7 @@ function FoodForm({ onSubmitSuccess }) {
   };
 
   return (
-    <div className="h-[138px] w-full rounded-xl p-2 border-2">
+    <div className="h-[138px] w-full rounded-xl p-2 border-2 relative">
       <form
         className="flex w-full items-center gap-3 justify-between p-3"
         onSubmit={handleSubmit}
@@ -54,8 +63,8 @@ function FoodForm({ onSubmitSuccess }) {
             <FileInput name="imgUrl" value={imgUrl} onChange={handleChange} />
           </div>
         </div>
-        <div className="flex w-2/3 lg:w-11/12 flex-col">
-          <div className="flex w-full justify-between pt-1 pb-4 gap-0 sm:gap-3">
+        <div className="flex w-2/3 lg:w-11/12 flex-col ">
+          <div className="flex w-full justify-between pt-1 pb-4 gap-0 sm:gap-3 ">
             <div className="w-5/12">
               <label htmlFor="title"></label>
               <input
@@ -79,7 +88,7 @@ function FoodForm({ onSubmitSuccess }) {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="w-3/12 flex flex-shrink-0 justify-end">
+            <div className="w-3/12 flex flex-shrink-0 justify-end ">
               <button
                 className={`w-full rounded-md text-white  font-semibold border px-2 py-1 hover:bg-darkgreen ${
                   isSubmitting
@@ -91,6 +100,17 @@ function FoodForm({ onSubmitSuccess }) {
               >
                 Post
               </button>
+              {onCancel && (
+                <button
+                  className={`absolute w-8 h-8 top-[-10px] right-[-10px] border-2 bg-white rounded-full text-gray-400 font-bold text-sm px-2 py-1 hover:bg-gray-200 
+                    `}
+                  type="submit"
+                  onClick={onCancel}
+                  disabled={isSubmitting}
+                >
+                  X
+                </button>
+              )}
             </div>
           </div>
           <div className="">

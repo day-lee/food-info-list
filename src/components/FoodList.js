@@ -65,10 +65,23 @@ function FoodList({ items, onDelete }) {
   const itemsList = items.map((item) => {
     const enTitleFind = englishTitle.find((enItem) => item.id === enItem.id);
     const enTitle = enTitleFind?.title;
+    const { title, content, calorie } = item;
+    const initialValues = { title, content, calorie };
+
+    /**
+     * cancel btn only exist when there is a matching foodId
+     * hence, fresh FoodForm wouldn't have a value for onCancel
+     * which will be ignored and null
+     * that is why onCencel is not a state but can be used for conditional state
+     */
+    const handleCancel = () => {
+      setFoodId(null);
+    };
+
     if (item.id === foodId) {
       return (
         <li key={item.id}>
-          <FoodForm />
+          <FoodForm initialValues={initialValues} onCancel={handleCancel} />
         </li>
       );
     } else {
