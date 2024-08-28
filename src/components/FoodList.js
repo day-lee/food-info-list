@@ -71,3 +71,16 @@ function FoodList({ items, onDelete }) {
 }
 
 export default FoodList;
+
+/**
+ * 1. editingId state for remembering current edit post,
+ * conditionally render  FoodForm or FoodList
+ * 2. Edit btn on FoodListItem
+ *
+ * 3. Fill the value on edit: initialValues
+ * 4. Cancel btn
+ * 5. imgUrl on FileInput, useEffect
+ * 6. API test
+ * 7. FoodForm 새로 작성 or 업데이트 ?
+ * 8. handleUpdateSuccess() items state 업데이트
+ */
