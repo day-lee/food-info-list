@@ -1,7 +1,11 @@
+import { useState } from "react";
+
+import FoodForm from "./FoodForm";
+
 import englishTitle from "../enTitle";
 import noImg from "../assets/no-image.svg";
 
-function FoodListItem({ item, enTitle, onDelete }) {
+function FoodListItem({ item, enTitle, onDelete, onEdit }) {
   const dateFormat = () => {
     const timeStamp = new Date(item.updatedAt);
     // const formatDate = timeStamp.toISOString().substring(0, 10);
@@ -37,7 +41,10 @@ function FoodListItem({ item, enTitle, onDelete }) {
           <div className="text-gray-400 "> {dateFormat(item.createdAt)}</div>
         </div>
         <div className="flex gap-2 absolute bottom-5 right-4">
-          <button className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-green hover:bg-darkgreen">
+          <button
+            className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-green hover:bg-darkgreen"
+            onClick={() => onEdit(item.id)}
+          >
             Edit
           </button>
           <button
@@ -53,14 +60,29 @@ function FoodListItem({ item, enTitle, onDelete }) {
 }
 
 function FoodList({ items, onDelete }) {
+  const [foodId, setFoodId] = useState(null);
+
   const itemsList = items.map((item) => {
     const enTitleFind = englishTitle.find((enItem) => item.id === enItem.id);
     const enTitle = enTitleFind?.title;
-    return (
-      <li key={item.id}>
-        <FoodListItem item={item} enTitle={enTitle} onDelete={onDelete} />
-      </li>
-    );
+    if (item.id === foodId) {
+      return (
+        <li key={item.id}>
+          <FoodForm />
+        </li>
+      );
+    } else {
+      return (
+        <li key={item.id}>
+          <FoodListItem
+            item={item}
+            enTitle={enTitle}
+            onDelete={onDelete}
+            onEdit={setFoodId}
+          />
+        </li>
+      );
+    }
   });
 
   return (

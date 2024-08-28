@@ -44,7 +44,7 @@ function FoodForm({ onSubmitSuccess }) {
   };
 
   return (
-    <div className="h-[138px] w-full rounded-xl p-2 mb-10 border-2">
+    <div className="h-[138px] w-full rounded-xl p-2 border-2">
       <form
         className="flex w-full items-center gap-3 justify-between p-3"
         onSubmit={handleSubmit}

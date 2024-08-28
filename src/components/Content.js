@@ -6,8 +6,6 @@ import FoodForm from "./FoodForm";
 
 import searchImg from "../assets/search.svg";
 
-const LIMIT = 10;
-
 function Content() {
   const [cursor, setCursor] = useState("");
   const [items, setItems] = useState([]);
@@ -92,7 +90,7 @@ function Content() {
       <div className="flex flex-col justify-center items-center sm:px-20 mb-4">
         <div className="flex flex-col items-center pt-8 pb-4 w-5/6">
           <FoodForm onSubmitSuccess={handleSubmitSuccess} />
-          <div className="flex w-full justify-start gap-5">
+          <div className="flex w-full mt-10 justify-start gap-5">
             <form className="relative" onSubmit={handleSearchSubmit}>
               <input
                 className="p-1 border-2 border-green rounded-md h-8"
