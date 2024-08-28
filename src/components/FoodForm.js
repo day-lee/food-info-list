@@ -30,7 +30,7 @@ function FoodForm({ onSubmitSuccess }) {
     formData.append("title", title);
     formData.append("content", content);
     formData.append("calorie", calorie);
-    formData.append("imgFile", imgUrl);
+    formData.append("imgUrl", imgUrl);
     try {
       setIsSubmitting(true);
       const { food } = await createList(formData);
