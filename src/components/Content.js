@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import FoodList from "./FoodList";
-import { getLists, deleteList } from "../api";
+import { createList, deleteList, getLists, updateList } from "../api";
 import FoodForm from "./FoodForm";
+import FoodList from "./FoodList";
 
 import searchImg from "../assets/search.svg";
 
@@ -69,8 +69,19 @@ function Content() {
     }
   };
 
-  const handleSubmitSuccess = (item) => {
+  const handleCreateSuccess = (item) => {
     setItems((prevItems) => [item, ...prevItems]);
+  };
+
+  const handleUpdateSuccess = (food) => {
+    setItems((prevItems) => {
+      const splitIdx = prevItems.findIndex((item) => item.id === food.id);
+      return [
+        ...prevItems.slice(0, splitIdx),
+        food,
+        ...prevItems.slice(splitIdx + 1),
+      ];
+    });
   };
 
   const handleDelete = async (postId) => {
@@ -89,7 +100,10 @@ function Content() {
     <>
       <div className="flex flex-col justify-center items-center sm:px-20 mb-4">
         <div className="flex flex-col items-center pt-8 pb-4 w-5/6">
-          <FoodForm onSubmitSuccess={handleSubmitSuccess} />
+          <FoodForm
+            onSubmit={createList}
+            onSubmitSuccess={handleCreateSuccess}
+          />
           <div className="flex w-full mt-10 justify-start gap-5">
             <form className="relative" onSubmit={handleSearchSubmit}>
               <input
@@ -129,7 +143,12 @@ function Content() {
           </div>
         </div>
         <div className="flex flex-col justify-center sm:justify-start w-5/6">
-          <FoodList items={items} onDelete={handleDelete} />
+          <FoodList
+            items={items}
+            onDelete={handleDelete}
+            onUpdate={updateList}
+            onUpdateSuccess={handleUpdateSuccess}
+          />
           <div className="flex justify-center">
             {loadingError?.message && <div> {loadingError.message}</div>}
             {cursor && (

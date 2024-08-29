@@ -3,8 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import cancel from "../assets/cancel.svg";
 import previewUpload from "../assets/image-upload.svg";
 
-function FileInput({ name, value, onChange }) {
-  const [preview, setPreview] = useState("");
+function FileInput({ name, value, onChange, initialPreview }) {
+  const [preview, setPreview] = useState(initialPreview);
   const inputRef = useRef();
 
   const handleChange = (e) => {
@@ -32,11 +32,11 @@ function FileInput({ name, value, onChange }) {
     setPreview(previewUrl);
     // cleanup
     return () => {
-      setPreview();
+      setPreview(initialPreview);
       //clean the unused memory
       URL.revokeObjectURL(previewUrl);
     };
-  }, [value]);
+  }, [value, initialPreview]);
 
   // uncontrolled component for file input (security reasons)
   return (

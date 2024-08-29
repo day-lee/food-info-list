@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import FoodForm from "./FoodForm";
 
-import englishTitle from "../enTitle";
 import noImg from "../assets/no-image.svg";
+import englishTitle from "../enTitle";
 
 function FoodListItem({ item, enTitle, onDelete, onEdit }) {
   const dateFormat = () => {
@@ -59,13 +59,13 @@ function FoodListItem({ item, enTitle, onDelete, onEdit }) {
   );
 }
 
-function FoodList({ items, onDelete }) {
+function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
   const [foodId, setFoodId] = useState(null);
 
   const itemsList = items.map((item) => {
     const enTitleFind = englishTitle.find((enItem) => item.id === enItem.id);
     const enTitle = enTitleFind?.title;
-    const { title, content, calorie } = item;
+    const { id, imgUrl, title, content, calorie } = item;
     const initialValues = { title, content, calorie };
 
     /**
@@ -78,10 +78,25 @@ function FoodList({ items, onDelete }) {
       setFoodId(null);
     };
 
-    if (item.id === foodId) {
+    if (id === foodId) {
+      const handleSubmit = (formData) => {
+        onUpdate(id, formData);
+      };
+
+      const handleSubmitSuccess = (food) => {
+        console.log("foodList");
+        onUpdateSuccess(food);
+        setFoodId(null);
+      };
       return (
         <li key={item.id}>
-          <FoodForm initialValues={initialValues} onCancel={handleCancel} />
+          <FoodForm
+            initialValues={initialValues}
+            initialPreview={imgUrl}
+            onCancel={handleCancel}
+            onSubmit={handleSubmit}
+            onSubmitSuccess={handleSubmitSuccess}
+          />
         </li>
       );
     } else {
@@ -113,8 +128,11 @@ export default FoodList;
  * 2. Edit btn on FoodListItem
  *
  * 3. Fill the value on edit: initialValues
+ *
  * 4. Cancel btn
+ *
  * 5. imgUrl on FileInput, useEffect
+ *
  * 6. API test
  * 7. FoodForm 새로 작성 or 업데이트 ?
  * 8. handleUpdateSuccess() items state 업데이트

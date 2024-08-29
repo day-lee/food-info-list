@@ -27,6 +27,30 @@ export async function createList(formData) {
   return body;
 }
 
+export async function updateList(id, formData) {
+  const response = await fetch(`${BASE_URL}/foods/${id}`, {
+    method: "PUT",
+    body: formData,
+  });
+  if (!response.ok) {
+    throw new Error("Failed to update data.");
+  }
+  const body = await response.json();
+  return body;
+}
+
+// export async function updateList(id, formData) {
+//   const response = await fetch(`${BASE_URL}/foods/${id}`, {
+//     method: "PUT",
+//     body: formData,
+//   });
+//   if (!response.ok) {
+//     throw new Error("Failed to update data.");
+//   }
+//   const body = await response.json();
+//   return body;
+// }
+
 export async function deleteList(postId) {
   const response = await fetch(`${BASE_URL}/foods/${postId}`, {
     method: "DELETE",

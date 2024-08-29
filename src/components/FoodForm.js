@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FileInput from "./FileInput";
-import { createList } from "../api";
 
 const DEFAULT_VALUES = {
   title: "",
@@ -15,9 +14,11 @@ post is on editing mode.
 if initialValues has no value, that means it is fresh post hence use Default values
 */
 function FoodForm({
-  onSubmitSuccess,
   initialValues = DEFAULT_VALUES,
+  initialPreview,
   onCancel,
+  onSubmit,
+  onSubmitSuccess,
 }) {
   const [values, setValues] = useState(initialValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,15 +35,19 @@ function FoodForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("1");
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
     formData.append("calorie", calorie);
     formData.append("imgUrl", imgUrl);
+
     try {
+      console.log("2");
       setIsSubmitting(true);
-      const { food } = await createList(formData);
+      console.log("3");
+      const { food } = await onSubmit(formData);
       setValues(DEFAULT_VALUES);
       onSubmitSuccess(food);
     } catch (error) {
@@ -60,7 +65,12 @@ function FoodForm({
       >
         <div className="flex w-1/3 lg:w-1/12 justify-center">
           <div className=" h-[87px] w-[90px] sm:w-[100px] relative border-2 rounded-md">
-            <FileInput name="imgUrl" value={imgUrl} onChange={handleChange} />
+            <FileInput
+              name="imgUrl"
+              value={imgUrl}
+              onChange={handleChange}
+              initialPreview={initialPreview}
+            />
           </div>
         </div>
         <div className="flex w-2/3 lg:w-11/12 flex-col ">
