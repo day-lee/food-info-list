@@ -11,9 +11,6 @@ function FileInput({ name, value, onChange, initialPreview }) {
     onChange(name, e.target.files[0]);
   };
   const handleClearClick = () => {
-    // DOM node manipulation using .curretn property
-    // use condition in case there is no value
-    // make sure to connect with html input using 'ref'
     const inputNode = inputRef.current;
     if (!inputNode) return;
     inputNode.value = "";
@@ -21,24 +18,19 @@ function FileInput({ name, value, onChange, initialPreview }) {
   };
 
   const handleUploadClick = () => {
-    // Trigger the hidden file input
     inputRef.current.click();
   };
 
   useEffect(() => {
     if (!value) return;
-    // create blob, temporary address for img
     const previewUrl = URL.createObjectURL(value);
     setPreview(previewUrl);
-    // cleanup
     return () => {
       setPreview(initialPreview);
-      //clean the unused memory
       URL.revokeObjectURL(previewUrl);
     };
   }, [value, initialPreview]);
 
-  // uncontrolled component for file input (security reasons)
   return (
     <>
       <div className="absolute top-[-5px] right-[-5px] w-8  z-10">

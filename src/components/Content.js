@@ -20,7 +20,6 @@ function Content() {
   const themeDark = useContext(ThemeContext);
 
   const handleLoad = async (queries) => {
-    //TODO: try catch isloading button color change
     let result;
     try {
       setLoadingError(null);
@@ -41,8 +40,6 @@ function Content() {
     if (!queries.cursor) {
       setItems(foods);
     } else {
-      // foods is an array, which is reference types
-      // Use spread syntax to avoid modifying existing array issue
       setItems((prevItem) => [...prevItem, ...foods]);
     }
     setCursor(nextCursor);
@@ -50,7 +47,6 @@ function Content() {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Access an element by name within the form
     setSearch(e.target["search"].value);
   };
 
@@ -90,12 +86,10 @@ function Content() {
   const handleDelete = async (postId) => {
     const result = await deleteList(postId);
     if (!result) return;
-    // notice filter from prevItem
     setItems((prevItems) => prevItems.filter((item) => item.id !== postId));
   };
 
   useEffect(() => {
-    //console.log(order, cursor);
     handleLoad({ order, search });
   }, [order, search]);
 

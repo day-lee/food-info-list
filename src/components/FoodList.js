@@ -15,55 +15,53 @@ function FoodListItem({ item, enTitle, onDelete, onEdit }) {
   };
 
   return (
-    <>
-      <div
-        className="flex relative h-[220px] sm:h-[150px] gap-5 border-2 border-grey rounded-xl p-4 my-2"
-        key={item.id}
-      >
-        <div className="relative shrink-0">
-          <div className="absolute bottom-2">
-            <span className="bg-grey p-1 m-2 rounded shadow text-lime-900 bg-opacity-80 font-extrabold text-sm">
-              {item.calorie} kcal
-            </span>
-          </div>
-          <img
-            className="rounded w-[130px] h-[100px] sm:w-[150px]"
-            src={item.imgUrl || noImg}
-            alt={item.title}
-          />
+    <div
+      className="flex relative h-[220px] sm:h-[150px] gap-5 border-2 border-grey rounded-xl p-4 my-2"
+      key={item.id}
+    >
+      <div className="relative shrink-0">
+        <div className="absolute bottom-2">
+          <span className="bg-grey p-1 m-2 rounded shadow text-lime-900 bg-opacity-80 font-extrabold text-sm">
+            {item.calorie} kcal
+          </span>
         </div>
-        <div className="flex flex-col gap-2  ">
-          <div className="">
-            <span
-              className={`font-semibold text-lg truncate ${
-                themeDark && "text-white"
-              }`}
-            >
-              {item.title}
-            </span>
-            <p className={`font-semibold text-lg ${themeDark && "text-white"}`}>
-              {enTitle}
-            </p>
-          </div>
-          <div className="text-gray-500">{item.content}</div>
-          <div className="text-gray-400 "> {dateFormat(item.createdAt)}</div>
-        </div>
-        <div className="flex gap-2 absolute bottom-5 right-4">
-          <button
-            className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-green hover:bg-darkgreen"
-            onClick={() => onEdit(item.id)}
-          >
-            Edit
-          </button>
-          <button
-            className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-gray-400 hover:bg-gray-500"
-            onClick={() => onDelete(item.id)}
-          >
-            Delete
-          </button>
-        </div>
+        <img
+          className="rounded w-[130px] h-[100px] sm:w-[150px]"
+          src={item.imgUrl || noImg}
+          alt={item.title}
+        />
       </div>
-    </>
+      <div className="flex flex-col gap-2  ">
+        <div className="">
+          <span
+            className={`font-semibold text-lg truncate ${
+              themeDark && "text-white"
+            }`}
+          >
+            {item.title}
+          </span>
+          <p className={`font-semibold text-lg ${themeDark && "text-white"}`}>
+            {enTitle}
+          </p>
+        </div>
+        <div className="text-gray-500">{item.content}</div>
+        <div className="text-gray-400 "> {dateFormat(item.createdAt)}</div>
+      </div>
+      <div className="flex gap-2 absolute bottom-5 right-4">
+        <button
+          className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-green hover:bg-darkgreen"
+          onClick={() => onEdit(item.id)}
+        >
+          Edit
+        </button>
+        <button
+          className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-gray-400 hover:bg-gray-500"
+          onClick={() => onDelete(item.id)}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -76,26 +74,14 @@ function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
     const { id, imgUrl, title, content, calorie } = item;
     const initialValues = { title, content, calorie };
 
-    /**
-     * cancel btn only exist when there is a matching foodId
-     * hence, fresh FoodForm wouldn't have a value for onCancel
-     * which will be ignored and null
-     * that is why onCencel is not a state but can be used for conditional state
-     */
     const handleCancel = () => {
       setFoodId(null);
     };
 
-    // if (id === foodId) {
-    //   const handleSubmit = (formData) => {
-    //     return onUpdate(id, formData);
-    //   };
-    // implicit return
     if (id === foodId) {
       const handleSubmit = (formData) => onUpdate(id, formData);
 
       const handleSubmitSuccess = (food) => {
-        // no return keyword hence would return undefined however, these two lines of code doesn't need to return anything but perform actions
         onUpdateSuccess(food);
         setFoodId(null);
       };
@@ -132,19 +118,3 @@ function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
 }
 
 export default FoodList;
-
-/**
- * 1. editingId state for remembering current edit post,
- * conditionally render  FoodForm or FoodList
- * 2. Edit btn on FoodListItem
- *
- * 3. Fill the value on edit: initialValues
- *
- * 4. Cancel btn
- *
- * 5. imgUrl on FileInput, useEffect
- *
- * 6. API test
- * 7. FoodForm 새로 작성 or 업데이트 ?
- * 8. handleUpdateSuccess() items state 업데이트
- */

@@ -8,12 +8,7 @@ const INITIAL_VALUES = {
   calorie: 0,
   imgFile: null,
 };
-/** FoodForm is shown 1. initial post 2. updating exsting post 
-Filling in the form happens depending on two situations
-if initialValues are filled and delivered, that already means 
-post is on editing mode.
-if initialValues has no value, that means it is fresh post hence use Default values
-*/
+
 function FoodForm({
   initialValues = INITIAL_VALUES,
   initialPreview,

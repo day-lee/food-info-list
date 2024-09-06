@@ -1,6 +1,7 @@
 import copyright from "../assets/copyright.svg";
-import linkedin from "../assets/linkedin.svg";
 import github from "../assets/github.svg";
+import linkedin from "../assets/linkedin.svg";
+import notion from "../assets/notionLogo.svg";
 
 function Footer() {
   return (
@@ -19,6 +20,13 @@ function Footer() {
           rel="noopener noreferrer"
         >
           <img className="w-10" src={github} alt="github" />
+        </a>
+        <a
+          href="https://diamond-law-064.notion.site/Dayeon-Lee-Frontend-Engineer-1ee316387444473280bf56fe2eab6be4"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img className="w-10" src={notion} alt="notionPortfolio" />
         </a>
       </div>
       <div className="flex items-center justify-center gap-1 p-2">
