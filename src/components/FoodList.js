@@ -10,7 +10,6 @@ function FoodListItem({ item, enTitle, onDelete, onEdit }) {
   const themeDark = useContext(ThemeContext);
   const dateFormat = () => {
     const timeStamp = new Date(item.updatedAt);
-    // const formatDate = timeStamp.toISOString().substring(0, 10);
     const formatDate = timeStamp.toUTCString().substring(0, 11);
     return formatDate;
   };
