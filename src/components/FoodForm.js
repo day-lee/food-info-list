@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import ThemeContext from "../contexts/ThemeContext";
 import FileInput from "./FileInput";
 
 const INITIAL_VALUES = {
@@ -25,6 +26,7 @@ function FoodForm({
   const [submittingError, setSubmittingError] = useState(null);
   const { title, content, calorie, imgFile } = values;
 
+  const themeDark = useContext(ThemeContext);
   const handleChange = (name, value) => {
     setValues((prevItem) => ({ ...prevItem, [name]: value }));
   };
@@ -59,7 +61,7 @@ function FoodForm({
   };
 
   return (
-    <div className="h-[138px] w-full rounded-xl p-2 border-2 relative">
+    <div className="h-[138px] w-full rounded-xl p-2 border-2 border-green relative">
       <form
         className="flex w-full items-center gap-3 justify-between p-3"
         onSubmit={handleSubmit}
@@ -79,7 +81,9 @@ function FoodForm({
             <div className="w-5/12">
               <label htmlFor="title"></label>
               <input
-                className="p-1 border-2 rounded-md w-full"
+                className={`p-1 border-2 rounded-md w-full  ${
+                  themeDark && "bg-gray-800 text-white"
+                }`}
                 id="title"
                 name="title"
                 placeholder="e.g. apple"
@@ -91,7 +95,9 @@ function FoodForm({
             <div className="w-2/12  sm:w-5/12 ">
               <label htmlFor="calorie"></label>
               <input
-                className="p-1 border-2 rounded-md w-full"
+                className={`p-1 border-2 rounded-md w-full ${
+                  themeDark && "bg-gray-800 text-white"
+                }`}
                 id="calorie"
                 name="calorie"
                 type="number"
@@ -127,7 +133,9 @@ function FoodForm({
           <div className="">
             <label htmlFor="content"></label>
             <input
-              className="p-1.5 border-2 rounded-md w-full"
+              className={`p-1.5 border-2 rounded-md w-full ${
+                themeDark && "bg-gray-800 text-white"
+              }`}
               id="content"
               name="content"
               type="text"

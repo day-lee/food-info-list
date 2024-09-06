@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import FoodForm from "./FoodForm";
 
 import noImg from "../assets/no-image.svg";
+import ThemeContext from "../contexts/ThemeContext";
 import englishTitle from "../enTitle";
 
 function FoodListItem({ item, enTitle, onDelete, onEdit }) {
+  const themeDark = useContext(ThemeContext);
   const dateFormat = () => {
     const timeStamp = new Date(item.updatedAt);
     // const formatDate = timeStamp.toISOString().substring(0, 10);
@@ -16,7 +18,7 @@ function FoodListItem({ item, enTitle, onDelete, onEdit }) {
   return (
     <>
       <div
-        className="flex relative items-center h-[160px] sm:h-[150px] gap-5 border-2 border-grey rounded-xl p-4 my-2"
+        className="flex relative h-[220px] sm:h-[150px] gap-5 border-2 border-grey rounded-xl p-4 my-2"
         key={item.id}
       >
         <div className="relative shrink-0">
@@ -33,9 +35,16 @@ function FoodListItem({ item, enTitle, onDelete, onEdit }) {
         </div>
         <div className="flex flex-col gap-2  ">
           <div className="">
-            <span className="font-semibold text-lg truncate">{item.title}</span>
-
-            <p className="font-semibold text-lg">{enTitle}</p>
+            <span
+              className={`font-semibold text-lg truncate ${
+                themeDark && "text-white"
+              }`}
+            >
+              {item.title}
+            </span>
+            <p className={`font-semibold text-lg ${themeDark && "text-white"}`}>
+              {enTitle}
+            </p>
           </div>
           <div className="text-gray-500">{item.content}</div>
           <div className="text-gray-400 "> {dateFormat(item.createdAt)}</div>

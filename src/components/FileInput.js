@@ -41,7 +41,7 @@ function FileInput({ name, value, onChange, initialPreview }) {
   // uncontrolled component for file input (security reasons)
   return (
     <>
-      <div className="absolute top-0 right-0 w-10  z-10">
+      <div className="absolute top-[-5px] right-[-5px] w-8  z-10">
         {value && (
           <button type="button" onClick={handleClearClick}>
             <img src={cancel} alt="X" />

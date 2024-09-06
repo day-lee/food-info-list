@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { createList, deleteList, getLists, updateList } from "../api";
+import ThemeContext from "../contexts/ThemeContext";
 import FoodForm from "./FoodForm";
 import FoodList from "./FoodList";
 
@@ -15,6 +16,8 @@ function Content() {
   const [search, setSearch] = useState("");
   const [isCalorieSelected, setIsCalorieSelected] = useState(false);
   const [isDateSelected, setIsDateSelected] = useState(true);
+
+  const themeDark = useContext(ThemeContext);
 
   const handleLoad = async (queries) => {
     //TODO: try catch isloading button color change
@@ -98,7 +101,11 @@ function Content() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center sm:px-20 mb-4">
+      <div
+        className={`flex flex-col justify-center items-center sm:px-20 ${
+          themeDark && "bg-gray-800"
+        }`}
+      >
         <div className="flex flex-col items-center pt-8 pb-4 w-5/6">
           <FoodForm
             onSubmit={createList}
@@ -107,7 +114,9 @@ function Content() {
           <div className="flex w-full mt-10 justify-start gap-5">
             <form className="relative" onSubmit={handleSearchSubmit}>
               <input
-                className="p-1 border-2 border-green rounded-md h-8"
+                className={`p-1 border-2 border-green rounded-md h-8 ${
+                  themeDark && "bg-gray-800 text-white"
+                }`}
                 type="text"
                 name="search"
               />
@@ -119,7 +128,7 @@ function Content() {
                 />
               </button>
             </form>
-            <div className="flex gap-5">
+            <div className={`flex gap-5 ${themeDark && "text-white"}`}>
               <button
                 className={` ${
                   isCalorieSelected && "text-darkgreen font-semibold"
@@ -132,7 +141,7 @@ function Content() {
 
               <button
                 className={`${
-                  isDateSelected && "font-semibold text-darkgreen"
+                  isDateSelected && "font-semibold text-darkgreen "
                 }`}
                 id="byDate"
                 onClick={handleChangeOrder}
