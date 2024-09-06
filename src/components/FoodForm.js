@@ -1,11 +1,11 @@
 import { useState } from "react";
 import FileInput from "./FileInput";
 
-const DEFAULT_VALUES = {
+const INITIAL_VALUES = {
   title: "",
   content: "",
   calorie: 0,
-  imgUrl: null,
+  imgFile: null,
 };
 /** FoodForm is shown 1. initial post 2. updating exsting post 
 Filling in the form happens depending on two situations
@@ -14,7 +14,7 @@ post is on editing mode.
 if initialValues has no value, that means it is fresh post hence use Default values
 */
 function FoodForm({
-  initialValues = DEFAULT_VALUES,
+  initialValues = INITIAL_VALUES,
   initialPreview,
   onCancel,
   onSubmit,
@@ -22,7 +22,8 @@ function FoodForm({
 }) {
   const [values, setValues] = useState(initialValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { title, content, calorie, imgUrl } = values;
+  const [submittingError, setSubmittingError] = useState(null);
+  const { title, content, calorie, imgFile } = values;
 
   const handleChange = (name, value) => {
     setValues((prevItem) => ({ ...prevItem, [name]: value }));
@@ -35,26 +36,26 @@ function FoodForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("1");
-
+    console.log(values);
     const formData = new FormData();
+    formData.append("imgFile", imgFile);
     formData.append("title", title);
-    formData.append("content", content);
     formData.append("calorie", calorie);
-    formData.append("imgUrl", imgUrl);
-
+    formData.append("content", content);
+    let result;
     try {
-      console.log("2");
+      setSubmittingError(null);
       setIsSubmitting(true);
-      console.log("3");
-      const { food } = await onSubmit(formData);
-      setValues(DEFAULT_VALUES);
-      onSubmitSuccess(food);
+      result = await onSubmit(formData);
     } catch (error) {
+      setSubmittingError(error);
       return;
     } finally {
       setIsSubmitting(false);
     }
+    const { food } = result;
+    onSubmitSuccess(food);
+    setValues(INITIAL_VALUES);
   };
 
   return (
@@ -66,8 +67,8 @@ function FoodForm({
         <div className="flex w-1/3 lg:w-1/12 justify-center">
           <div className=" h-[87px] w-[90px] sm:w-[100px] relative border-2 rounded-md">
             <FileInput
-              name="imgUrl"
-              value={imgUrl}
+              name="imgFile"
+              value={values.imgFile}
               onChange={handleChange}
               initialPreview={initialPreview}
             />
@@ -136,6 +137,7 @@ function FoodForm({
             />
           </div>
         </div>
+        {submittingError && <p>{submittingError.message}</p>}
       </form>
     </div>
   );

@@ -78,13 +78,16 @@ function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
       setFoodId(null);
     };
 
+    // if (id === foodId) {
+    //   const handleSubmit = (formData) => {
+    //     return onUpdate(id, formData);
+    //   };
+    // implicit return
     if (id === foodId) {
-      const handleSubmit = (formData) => {
-        onUpdate(id, formData);
-      };
+      const handleSubmit = (formData) => onUpdate(id, formData);
 
       const handleSubmitSuccess = (food) => {
-        console.log("foodList");
+        // no return keyword hence would return undefined however, these two lines of code doesn't need to return anything but perform actions
         onUpdateSuccess(food);
         setFoodId(null);
       };
