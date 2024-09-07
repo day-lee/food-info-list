@@ -16,7 +16,7 @@ function FoodListItem({ item, enTitle, onDelete, onEdit }) {
 
   return (
     <div
-      className="flex relative h-[220px] sm:h-[150px] gap-5 border-2 border-grey rounded-xl p-4 my-2"
+      className="flex relative h-[220px] sm:h-[150px] gap-5 border-2 truncate overflow-hidden  border-grey rounded-xl p-4 my-2"
       key={item.id}
     >
       <div className="relative shrink-0">
@@ -31,23 +31,27 @@ function FoodListItem({ item, enTitle, onDelete, onEdit }) {
           alt={item.title}
         />
       </div>
-      <div className="flex flex-col gap-2  ">
-        <div className="">
+      <div className="flex flex-col gap-2 w-1/2">
+        <div className="w-full">
           <span
-            className={`font-semibold text-lg truncate ${
+            className={`font-semibold text-lg inline-block truncate w-full ${
               themeDark && "text-white"
             }`}
           >
             {item.title}
           </span>
-          <p className={`font-semibold text-lg ${themeDark && "text-white"}`}>
+          <p
+            className={`font-semibold text-lg truncate w-full ${
+              themeDark && "text-white"
+            }`}
+          >
             {enTitle}
           </p>
         </div>
         <div className="text-gray-500">{item.content}</div>
-        <div className="text-gray-400 "> {dateFormat(item.createdAt)}</div>
+        <div className="text-gray-500 "> {dateFormat(item.createdAt)}</div>
       </div>
-      <div className="flex gap-2 absolute bottom-5 right-4">
+      <div className="flex gap-2 absolute bottom-3 right-4">
         <button
           className="w-full rounded-md text-white font-semibold border px-2 py-1 bg-green hover:bg-darkgreen"
           onClick={() => onEdit(item.id)}

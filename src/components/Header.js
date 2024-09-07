@@ -9,7 +9,7 @@ function Header({ onChange }) {
           <img className="h-14 m-2" src={logo} alt="logo" />
         </div>
       </div>
-      <div className="flex absolute right-2 top-7 justify-end">
+      <div className="flex absolute right-5 top-6 justify-end">
         <ThemeSelect onChange={onChange} />
       </div>
     </div>

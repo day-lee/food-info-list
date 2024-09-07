@@ -96,7 +96,7 @@ function Content() {
   return (
     <>
       <div
-        className={`flex flex-col justify-center items-center sm:px-20 ${
+        className={`flex flex-col justify-center items-center min-w-24 sm:px-20 ${
           themeDark && "bg-gray-800"
         }`}
       >
@@ -122,9 +122,9 @@ function Content() {
                 />
               </button>
             </form>
-            <div className={`flex gap-5 ${themeDark && "text-white"}`}>
+            <div className={`flex gap-5  ${themeDark && "text-white"}`}>
               <button
-                className={` ${
+                className={`hover:bg-lime-700 rounded-xl px-1 ${
                   isCalorieSelected && "text-darkgreen font-semibold"
                 }`}
                 id="byCalorie"
@@ -134,7 +134,7 @@ function Content() {
               </button>
 
               <button
-                className={`${
+                className={`hover:bg-lime-800 rounded-xl px-1 ${
                   isDateSelected && "font-semibold text-darkgreen "
                 }`}
                 id="byDate"

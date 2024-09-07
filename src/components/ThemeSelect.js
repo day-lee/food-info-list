@@ -1,16 +1,17 @@
 import { useContext } from "react";
+
 import ThemeContext from "../contexts/ThemeContext";
 
 function ThemeSelect({ onChange }) {
-  const theme = useContext(ThemeContext);
+  const themeDark = useContext(ThemeContext);
   const handleChange = (e) => {
     const value = e.target.value === "dark";
     onChange(value);
   };
   return (
     <select
-      className="bg-grey font-semibold text-gray-500"
-      value={theme}
+      className="bg-grey font-semibold text-gray-500 cursor-pointer hover:bg-green rounded-xl p-1"
+      value={themeDark}
       onChange={handleChange}
     >
       <option value="">Mode</option>

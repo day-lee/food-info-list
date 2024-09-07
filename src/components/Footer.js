@@ -6,8 +6,9 @@ import notion from "../assets/notionLogo.svg";
 function Footer() {
   return (
     <div className="flex-col bg-grey h-[140px] p-10">
-      <div className="flex gap-1 justify-center">
+      <div className="flex gap-1 justify-center ">
         <a
+          className="hover:bg-darkgreen rounded-3xl"
           href="https://www.linkedin.com/in/dev-dayeonlee/"
           target="_blank"
           rel="noopener noreferrer"
@@ -15,6 +16,7 @@ function Footer() {
           <img className="w-10" src={linkedin} alt="linkedin" />
         </a>
         <a
+          className="hover:bg-darkgreen rounded-3xl"
           href="https://github.com/day-lee/"
           target="_blank"
           rel="noopener noreferrer"
@@ -22,6 +24,7 @@ function Footer() {
           <img className="w-10" src={github} alt="github" />
         </a>
         <a
+          className="hover:bg-darkgreen rounded-3xl"
           href="https://diamond-law-064.notion.site/Dayeon-Lee-Frontend-Engineer-1ee316387444473280bf56fe2eab6be4"
           target="_blank"
           rel="noopener noreferrer"

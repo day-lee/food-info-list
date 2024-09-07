@@ -62,7 +62,7 @@ function FoodForm({
         onSubmit={handleSubmit}
       >
         <div className="flex w-1/3 lg:w-1/12 justify-center">
-          <div className=" h-[87px] w-[90px] sm:w-[100px] relative border-2 rounded-md">
+          <div className=" h-[87px] w-[90px] sm:w-[100px] relative border-2 rounded-md hover:border-green">
             <FileInput
               name="imgFile"
               value={values.imgFile}
@@ -114,7 +114,7 @@ function FoodForm({
               </button>
               {onCancel && (
                 <button
-                  className={`absolute w-8 h-8 top-[-10px] right-[-10px] border-2 bg-white rounded-full text-gray-400 font-bold text-sm px-2 py-1 hover:bg-gray-200 
+                  className={`absolute w-8 h-8 top-[-10px] right-[-10px] border-2 bg-white rounded-full text-gray-500 font-bold text-sm px-2 py-1 hover:bg-gray-300 
                     `}
                   type="submit"
                   onClick={onCancel}

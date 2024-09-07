@@ -6,7 +6,7 @@ import ThemeContext from "./contexts/ThemeContext";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  console.log(darkMode);
+
   return (
     <ThemeContext.Provider value={darkMode}>
       <Header onChange={setDarkMode} />
